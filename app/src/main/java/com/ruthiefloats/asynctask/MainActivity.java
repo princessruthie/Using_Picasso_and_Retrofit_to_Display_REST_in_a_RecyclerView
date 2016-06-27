@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ruthiefloats.asynctask.model.Flower;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class MainActivity extends Activity {
     TextView output;
     ProgressBar pb;
     List<MyTask> tasks;
+    List<Flower> flowerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
