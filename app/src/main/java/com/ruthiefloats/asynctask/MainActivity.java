@@ -102,11 +102,16 @@ public class MainActivity extends Activity {
             tasks.add(this);
         }
 
+        /*
+        the returned String from doInBackground is the
+        parameter String for onPostExecute
+         */
         @Override
         protected String doInBackground(String... strings) {
 
             String content = HttpManager.getData(strings[0]);
             return content;
+
         }
 
         //Has access to main thread.
