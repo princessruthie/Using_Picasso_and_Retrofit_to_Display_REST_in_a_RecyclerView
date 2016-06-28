@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_do_task) {
             if (isOnline()) {
-                requestData("http://services.hanselandpetal.com/feeds/flowers.json");
+                requestData("http://services.hanselandpetal.com/secure/flowers.json");
             } else {
                 Toast.makeText(MainActivity.this, "Network is not working", Toast.LENGTH_LONG).show();
             }
@@ -122,10 +122,7 @@ public class MainActivity extends Activity {
         //Has access to main thread.
         @Override
         protected void onPostExecute(String s) {
-            flowerList = JSONParser.parseFeed(s);
 
-
-            updateDisplay();
             /*
             remove this task from the list
              */
@@ -136,6 +133,16 @@ public class MainActivity extends Activity {
             if (tasks.size() == 0) {
                 pb.setVisibility(View.INVISIBLE);
             }
+
+            if (s == null){
+                Toast.makeText(MainActivity.this, "Unable to authenticate", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+
+            flowerList = JSONParser.parseFeed(s);
+
+            updateDisplay();
         }
 
         @Override
