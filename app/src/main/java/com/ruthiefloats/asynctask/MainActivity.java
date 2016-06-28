@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(String... strings) {
 
-            String content = HttpManager.getData(strings[0]);
+            String content = HttpManager.getData(strings[0], "feeduser", "feedpassword");
             return content;
         }
 
@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
             }
 
             if (s == null){
-                Toast.makeText(MainActivity.this, "Unable to authenticate", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Unable to authenticate with web service.", Toast.LENGTH_LONG).show();
                 return;
             }
 
