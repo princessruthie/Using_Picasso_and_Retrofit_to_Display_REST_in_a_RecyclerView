@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruthiefloats.asynctask.model.Flower;
+import com.ruthiefloats.asynctask.parsers.JSONParser;
 import com.ruthiefloats.asynctask.parsers.XMLParser;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_do_task) {
             if (isOnline()) {
-                requestData("http://services.hanselandpetal.com/feeds/flowers.xml");
+                requestData("http://services.hanselandpetal.com/feeds/flowers.json");
             } else {
                 Toast.makeText(MainActivity.this, "Network is not working", Toast.LENGTH_LONG).show();
             }
@@ -121,7 +122,7 @@ public class MainActivity extends Activity {
         //Has access to main thread.
         @Override
         protected void onPostExecute(String s) {
-            flowerList = XMLParser.parseFeed(s);
+            flowerList = JSONParser.parseFeed(s);
 
 
             updateDisplay();
