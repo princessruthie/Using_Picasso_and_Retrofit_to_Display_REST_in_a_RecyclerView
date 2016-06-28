@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
     }
 
     protected void updateDisplay() {
-        if (flowerList != null){
+        if (flowerList != null) {
             for (Flower flower : flowerList) {
                 output.append(flower.getName() + "\n");
 
