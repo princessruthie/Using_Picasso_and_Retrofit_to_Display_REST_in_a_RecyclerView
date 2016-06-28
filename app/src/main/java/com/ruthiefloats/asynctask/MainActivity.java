@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruthiefloats.asynctask.model.Flower;
+import com.ruthiefloats.asynctask.parsers.XMLParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +71,14 @@ public class MainActivity extends Activity {
         myTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, uri);
     }
 
-    protected void updateDisplay(String message) {
-        output.append(message + "\n");
+    protected void updateDisplay() {
+        if (flowerList != null){
+            for (Flower flower : flowerList) {
+                output.append(flower.getName() + "\n");
+
+            }
+        }
+//        output.append(message + "\n");
     }
 
     protected boolean isOnline() {
@@ -90,8 +97,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            updateDisplay("Starting task");
-
+//            updateDisplay("Starting task");
             /*
             if the list of tasks is empty, make bar visible
             (otherwise, if the list isn't empty, the bar is already visible)
@@ -115,7 +121,10 @@ public class MainActivity extends Activity {
         //Has access to main thread.
         @Override
         protected void onPostExecute(String s) {
-            updateDisplay(s);
+            flowerList = XMLParser.parseFeed(s);
+
+
+            updateDisplay();
             /*
             remove this task from the list
              */
@@ -130,7 +139,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            updateDisplay(values[0]);
+//            updateDisplay(values[0]);
         }
     }
 }

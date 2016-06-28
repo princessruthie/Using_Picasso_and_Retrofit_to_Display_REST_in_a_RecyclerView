@@ -4,7 +4,6 @@ package com.ruthiefloats.asynctask.model;
  * Created by fieldsru on 6/27/16.
  */
 public class Flower {
-    private int productId;
 
     public int getProductId() {
         return productId;
@@ -54,6 +53,7 @@ public class Flower {
         this.photo = photo;
     }
 
+    private int productId;
     private String name;
     private String category;
     private String instructions;
