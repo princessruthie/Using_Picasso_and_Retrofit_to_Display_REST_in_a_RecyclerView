@@ -6,17 +6,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruthiefloats.asynctask.model.Flower;
 import com.ruthiefloats.asynctask.parsers.JSONParser;
-import com.ruthiefloats.asynctask.parsers.XMLParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ public class MainActivity extends Activity {
 	the updatedisplay method adds text that View.
 	 */
 
-    TextView output;
     ProgressBar pb;
     List<MyTask> tasks;
     List<Flower> flowerList;
@@ -39,8 +37,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 //		Initialize the TextView for vertical scrolling
-        output = (TextView) findViewById(R.id.textView);
-        output.setMovementMethod(new ScrollingMovementMethod());
+//        output = (TextView) findViewById(R.id.textView);
+//        output.setMovementMethod(new ScrollingMovementMethod());
 
         pb = (ProgressBar) findViewById(R.id.progressBar);
         pb.setVisibility(View.INVISIBLE);
@@ -73,14 +71,19 @@ public class MainActivity extends Activity {
     }
 
     protected void updateDisplay() {
-        if (flowerList != null) {
-            for (Flower flower : flowerList) {
-                output.append(flower.getName() + "\n");
 
-            }
+        if (flowerList != null) {
+
+            RecyclerView rvFlowers = (RecyclerView) findViewById(R.id.rvFlowers);
+            RVAdapter adapter = new RVAdapter(MainActivity.this, flowerList);
+
+            rvFlowers.setAdapter(adapter);
+
+            rvFlowers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         }
-//        output.append(message + "\n");
     }
+//        output.append(message + "\n");
+
 
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -134,7 +137,7 @@ public class MainActivity extends Activity {
                 pb.setVisibility(View.INVISIBLE);
             }
 
-            if (s == null){
+            if (s == null) {
                 Toast.makeText(MainActivity.this, "Unable to authenticate with web service.", Toast.LENGTH_LONG).show();
                 return;
             }
