@@ -17,10 +17,11 @@ import com.ruthiefloats.asynctask.model.Flower;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends Activity {
 
@@ -69,24 +70,41 @@ public class MainActivity extends Activity {
 
     private void requestData(String uri) {
 
-        RestAdapter adapter = new RestAdapter.Builder()
-                .setEndpoint(ENDPOINT)
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        FlowersAPI api = adapter.create(FlowersAPI.class);
-
-        api.getFeed(new Callback<List<Flower>>() {
+        FlowersAPI api = retrofit.create(FlowersAPI.class);
+        Call<List<Flower>> call = api.getFeed2();
+        call.enqueue(new Callback<List<Flower>>() {
             @Override
-            public void success(List<Flower> flowers, Response response) {
-                flowerList = flowers;
-                updateDisplay();
+            public void onResponse(Call<List<Flower>> call, Response<List<Flower>> response) {
+                if (response.isSuccessful()){
+                    flowerList = response.body();
+                    updateDisplay();
+                }
             }
 
             @Override
-            public void failure(RetrofitError error) {
-
+            public void onFailure(Call<List<Flower>> call, Throwable t) {
+                //todo: handle this failure sensibly.
             }
         });
+
+
+//        api.getFeed(new Callback<List<Flower>>() {
+//            @Override
+//            public void success(List<Flower> flowers, Response response) {
+//                flowerList = flowers;
+//                updateDisplay();
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//
+//            }
+//        });
 //        MyTask myTask = new MyTask();
 //        myTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, uri);
     }
