@@ -5,6 +5,11 @@
               android:orientation="horizontal"
               android:paddingBottom="10dp"
               android:paddingTop="10dp">
+    <ImageView
+        android:id="@+id/flower_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
 
     <TextView
         android:id="@+id/flower_name"

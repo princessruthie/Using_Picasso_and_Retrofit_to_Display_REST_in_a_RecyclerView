@@ -30,6 +30,9 @@ public class MainActivity extends Activity {
     ProgressBar pb;
     List<MyTask> tasks;
     List<Flower> flowerList;
+    @SuppressWarnings("unused")
+    protected static final String PHOTOS_BASE_URL =
+            "http://services.hanselandpetal.com/photos/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
